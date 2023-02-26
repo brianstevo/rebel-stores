@@ -17,10 +17,10 @@ code {
   object-fit: contain;
 }
 
-a:-webkit-any-link {
+.card a:-webkit-any-link {
   text-decoration: none;
   color: inherit;
 }
-a:hover {
+.card a:hover {
   color: inherit !important;
 }
