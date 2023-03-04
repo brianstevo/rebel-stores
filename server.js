@@ -5,6 +5,7 @@ import morgan from "morgan"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import productRouter from "./routes/productRoutes.js"
+import userRouter from "./routes/userRoutes.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 const app = express()
 app.use(cors())
@@ -35,10 +36,11 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/products", productRouter)
+app.use("/api/users", userRouter)
 
-app.get(notFound)
+app.use(notFound)
 
-app.get(errorHandler)
+app.use(errorHandler)
 
 // app.post("/", (req, res) => {
 //   const book = req.body
