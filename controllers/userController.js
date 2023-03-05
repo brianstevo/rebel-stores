@@ -78,13 +78,42 @@ const createUser = asyncHandler(async (req, res) => {
   }
 })
 
-// router.patch('/update/:id', (req, res) => {
-//     res.send('Update by ID API')
-// })
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const fetchUser = await User.findById(req.user._id)
+  console.log(fetchUser)
+  if (fetchUser) {
+    fetchUser.name = req.body.name || fetchUser.name
+    fetchUser.email = req.body.email || fetchUser.email
+    if (req.body.password) {
+      fetchUser.password = req.body.password
+    }
 
-// //Delete by ID Method
-// router.delete('/delete/:id', (req, res) => {
-//     res.send('Delete by ID API')
-// })
+    console.log(fetchUser)
+    const updatedUser = await fetchUser.save()
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      message: "user update successful",
+    })
+  } else {
+    res.status(404)
+    throw new Error("User does not exit")
+  }
+})
 
-export { loginUser, createUser, getUser, getUsers }
+const deleteUser = asyncHandler(async (req, res) => {
+  const fetchUser = await User.findById(req.params.id)
+  if (fetchUser) {
+    await fetchUser.remove()
+    res.json({
+      message: "user delete successful",
+    })
+  } else {
+    res.status(404)
+    throw new Error("User does not exit")
+  }
+})
+
+export { loginUser, createUser, getUser, getUsers, updateUserProfile, deleteUser }
