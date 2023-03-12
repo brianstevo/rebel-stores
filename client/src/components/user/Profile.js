@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Col, Row, Button, Card } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import Loader from "../utility/Loader"
-import Message from "../utility/Message"
-import { updateProfile, userDetails, USER_UPDATE_RESET } from "../actions/userActions"
+import Loader from "../../utility/Loader"
+import Message from "../../utility/Message"
+import { updateProfile, userDetails, USER_UPDATE_RESET } from "../../actions/userActions"
 import Form from "react-bootstrap/Form"
 import { useNavigate } from "react-router-dom"
 

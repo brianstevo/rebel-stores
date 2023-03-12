@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Col, Row, Button, Container, Card } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import Loader from "../utility/Loader"
-import Message from "../utility/Message"
-import { login } from "../actions/userActions"
+import Loader from "../../utility/Loader"
+import Message from "../../utility/Message"
+import { login } from "../../actions/userActions"
 import { Link } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import { useNavigate } from "react-router-dom"
@@ -54,7 +54,7 @@ const Login = () => {
             </Form>
             <Row>
               <Col className="mt-2">
-                New Customer?<Link to="signup"> Signup</Link>
+                New Customer?<Link to="/signup"> Signup</Link>
               </Col>
             </Row>
           </Card>

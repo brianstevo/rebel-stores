@@ -1,11 +1,10 @@
 import React, { useEffect } from "react"
 import { Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import Loader from "../utility/Loader"
-import Message from "../utility/Message"
-import { fetchUsers, deleteUser } from "../actions/userActions"
+import Loader from "../../utility/Loader"
+import Message from "../../utility/Message"
+import { fetchUsers, deleteUser } from "../../actions/userActions"
 import { useNavigate } from "react-router-dom"
-import { LinkContainer } from "react-router-bootstrap"
 
 const Users = () => {
   let navigate = useNavigate()
@@ -56,11 +55,11 @@ const Users = () => {
                   <td>{user.email}</td>
                   <td>{user.isAdmin ? "Y" : "N"}</td>
                   <td>
-                    <LinkContainer to={`/admin/users/${user._id}/edit`}>
+                    {/* <LinkContainer to={`/admin/users/${user._id}/edit`}>
                       <button type="button" className="btn btn-sm btn-outline-success">
                         Edit
                       </button>
-                    </LinkContainer>
+                    </LinkContainer> */}
                     <button style={{ marginLeft: "10px" }} type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteHandler(user._id)}>
                       Delete
                     </button>
