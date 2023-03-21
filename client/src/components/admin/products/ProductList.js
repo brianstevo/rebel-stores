@@ -1,11 +1,9 @@
 import React, { useEffect } from "react"
-import { ListGroup, Row, Col, Nav } from "react-bootstrap"
+import { ListGroup, Row, Col, Card } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../../../utility/Loader"
 import Message from "../../../utility/Message"
-import { fetchUsers } from "../../../actions/userActions"
-import { Outlet, useNavigate } from "react-router-dom"
-import { LinkContainer } from "react-router-bootstrap"
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
 
 const ProductList = () => {
   let navigate = useNavigate()
@@ -15,7 +13,6 @@ const ProductList = () => {
   const { loading, userInfo, error } = userLogin
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(fetchUsers())
     } else {
       navigate("/login")
     }
@@ -30,23 +27,20 @@ const ProductList = () => {
         <Message variant="danger" message={error} />
       ) : (
         <Row className="my-3">
-          <Col md={2}>
+          <Col md={2} className="mb-3">
             <ListGroup as="ol">
-              <ListGroup.Item as="li">
-                <LinkContainer to="view">
-                  <Nav.Link>View Products</Nav.Link>
-                </LinkContainer>
-              </ListGroup.Item>
-              <ListGroup.Item as="li">
-                <LinkContainer to="create">
-                  <Nav.Link>New Product</Nav.Link>
-                </LinkContainer>
-              </ListGroup.Item>
+              <NavLink to="view" className="linkbutton">
+                View Products
+              </NavLink>
+              <NavLink to="create" className="linkbutton">
+                New Product
+              </NavLink>
             </ListGroup>
           </Col>
-          <Col md={1}></Col>
           <Col md={9}>
-            <Outlet />
+            <Card>
+              <Outlet />
+            </Card>
           </Col>
         </Row>
       )}

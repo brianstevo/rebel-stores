@@ -7,6 +7,7 @@ import { signup } from "../../actions/userActions"
 import { Link } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import { useNavigate } from "react-router-dom"
+import { ERROR } from "../../actions/changeActions"
 
 const Signup = () => {
   let navigate = useNavigate()
@@ -16,7 +17,10 @@ const Signup = () => {
 
   const dispatch = useDispatch()
   const userSignup = useSelector((state) => state.userLogin)
-  const { loading, userInfo, error } = userSignup
+  const { userInfo } = userSignup
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, error } = loadingErrorSuccessObject
 
   useEffect(() => {
     if (userInfo) {
@@ -26,6 +30,12 @@ const Signup = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    if (name.length === 0 || email.length === 0 || password.length === 0) {
+      return dispatch({
+        type: ERROR,
+        payload: "Enter All Fields",
+      })
+    }
     dispatch(signup(name, email, password))
   }
   return (
@@ -33,7 +43,7 @@ const Signup = () => {
       <Row className="justify-content-md-center">
         <Col xs={12} md={5}>
           <Card className="rounded p-3 my-5">
-            <h1>Sigin In</h1>
+            <h1>Sign In</h1>
             {error && <Message variant="danger" message={error} />}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>

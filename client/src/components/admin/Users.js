@@ -13,9 +13,10 @@ const Users = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const userList = useSelector((state) => state.userList)
-  const { loading, users, error } = userList
-  const userDelete = useSelector((state) => state.userDelete)
-  const { success } = userDelete
+  const { users } = userList
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, success, message, error } = loadingErrorSuccessObject
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -31,6 +32,7 @@ const Users = () => {
   return (
     <>
       <h1>Users</h1>
+      {message && <Message variant="success" message={message} />}
       {loading ? (
         <Loader />
       ) : error ? (

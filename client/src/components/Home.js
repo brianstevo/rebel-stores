@@ -9,7 +9,10 @@ const Home = () => {
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
-  const { loading, products, error } = productList
+  const { products } = productList
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, error } = loadingErrorSuccessObject
 
   useEffect(() => {
     dispatch(listProducts())
@@ -21,7 +24,7 @@ const Home = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger" message={error} />
+        <Message variant="danger" message={"error"} />
       ) : (
         <Row>
           {products.map((product) => (

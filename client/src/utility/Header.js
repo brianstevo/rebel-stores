@@ -30,25 +30,25 @@ const Header = () => {
               </Nav.Link>
             </LinkContainer>
             {userInfo ? (
-              <NavDropdown title={userInfo.name} style={{ paddingLeft: "10px" }}>
+              <NavDropdown title={userInfo.name}>
                 <LinkContainer to="/Profile">
                   <NavDropdown.Item> profile</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <LinkContainer to="/login" style={{ paddingLeft: "10px" }}>
+              <LinkContainer to="/login">
                 <Nav.Link>
                   <i className="fa-solid fa-user"></i>Login
                 </Nav.Link>
               </LinkContainer>
             )}
             {userInfo?.isAdmin && (
-              <NavDropdown title="Admin Dashboard" style={{ paddingLeft: "10px" }}>
+              <NavDropdown title="Admin Dashboard">
                 <LinkContainer to="/admin/users">
                   <NavDropdown.Item>Users</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/admin/products">
+                <LinkContainer to="/admin/products/view">
                   <NavDropdown.Item>Products</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

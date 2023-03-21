@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Col, Image, Row, ListGroup, Card, Button } from "react-bootstrap"
+import { Col, Image, Row, ListGroup, Card } from "react-bootstrap"
 import Form from "react-bootstrap/Form"
 import { Link, useParams } from "react-router-dom"
 import Rating from "../utility/Rating"
@@ -7,22 +7,28 @@ import { listProductDetails } from "../actions/productActions"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../utility/Loader"
 import Message from "../utility/Message"
+import { addItemToCart } from "../actions/cartAction"
 
 const ProductDetails = () => {
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(1)
   let { id } = useParams()
   const dispatch = useDispatch()
   const productDetails = useSelector((state) => state.productDetails)
-  const { loading, product, error } = productDetails
+  const { product } = productDetails
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, error } = loadingErrorSuccessObject
 
   useEffect(() => {
     dispatch(listProductDetails(id))
   }, [dispatch]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const addToCart = () => {}
+  const addToCart = () => {
+    dispatch(addItemToCart(id, quantity))
+  }
   return (
     <>
-      <Link className="btn btn-outline-secondary btn-sm" to="/">
+      <Link className="btn btn-outline-primary btn-sm" to="/">
         Go Back
       </Link>
       {loading ? (
@@ -32,7 +38,7 @@ const ProductDetails = () => {
       ) : (
         <Row className="py-3">
           <Col md={5}>
-            <Image src={`./../` + product.images} fluid />
+            <Image src={product.image} fluid />
           </Col>
           <Col md={4}>
             <ListGroup variant="flush">
@@ -66,13 +72,13 @@ const ProductDetails = () => {
                     <Row>
                       <Col>Quantity:</Col>
                       <Col>
-                        <Form.Control as="select" value={quantity} onChange={(e) => setQuantity(e.target.value)}>
+                        <Form.Select style={{ paddingRight: "20px" }} value={quantity} onChange={(e) => setQuantity(e.target.value)}>
                           {[...Array(product.countInStock).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>
                           ))}
-                        </Form.Control>
+                        </Form.Select>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -80,9 +86,9 @@ const ProductDetails = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col className="d-grid gap-2">
-                      <Button className="btn btn-secondary btn-sm" disabled={product.countInStock === 0} onClick={addToCart}>
+                      <button className="btn btn-primary btn-sm" disabled={product.countInStock === 0} onClick={addToCart}>
                         Add to Cart
-                      </Button>
+                      </button>
                     </Col>
                   </Row>
                 </ListGroup.Item>

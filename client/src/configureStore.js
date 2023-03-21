@@ -5,8 +5,10 @@ import rootReducer from "./reducer"
 
 export default function configureStore() {
   const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null
+  const cartInfoFromStorage = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : []
   const initialState = {
     userLogin: { userInfo: userInfoFromStorage },
+    cart: { cartItems: cartInfoFromStorage },
   }
 
   const middleware = [thunk]

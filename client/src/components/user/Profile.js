@@ -3,7 +3,7 @@ import { Col, Row, Button, Card } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../../utility/Loader"
 import Message from "../../utility/Message"
-import { updateProfile, userDetails, USER_UPDATE_RESET } from "../../actions/userActions"
+import { updateProfile, userDetails } from "../../actions/userActions"
 import Form from "react-bootstrap/Form"
 import { useNavigate } from "react-router-dom"
 
@@ -17,14 +17,12 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const userDetail = useSelector((state) => state.userDetails)
-  const { loading, user, error } = userDetail
-  const updateUserProfile = useSelector((state) => state.updateUser)
-  const { success } = updateUserProfile
+  const { user } = userDetail
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, success, message, error } = loadingErrorSuccessObject
 
   useEffect(() => {
-    dispatch({
-      type: USER_UPDATE_RESET,
-    })
     if (!userInfo) {
       navigate("/login")
     } else {
@@ -47,7 +45,7 @@ const Profile = () => {
         <Card className="rounded p-3 my-2">
           <h1>User Profile</h1>
           {error && <Message variant="danger" message={error} />}
-          {success && <Message variant="success" message="Updated user" />}
+          {success && <Message variant="success" message={message} />}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">

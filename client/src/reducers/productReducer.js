@@ -1,14 +1,9 @@
-import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from "./../actions/productActions"
+import { PRODUCT_CREATE_RESET, PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_RESET, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_SUCCESS } from "../actions/productActions"
 
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
-    case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] }
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: action.payload }
-    case PRODUCT_LIST_FAIL:
-      console.log(action.payload)
-      return { loading: false, error: action.payload }
+      return { products: action.payload }
     default:
       return state
   }
@@ -16,13 +11,37 @@ export const productListReducer = (state = { products: [] }, action) => {
 
 export const productDetailsReducer = (state = { product: { reviews: [] } }, action) => {
   switch (action.type) {
-    case PRODUCT_DETAILS_REQUEST:
-      return { loading: true, ...state }
     case PRODUCT_DETAILS_SUCCESS:
-      return { loading: false, product: action.payload }
-    case PRODUCT_DETAILS_FAIL:
-      console.log(action.payload)
-      return { loading: false, error: action.payload }
+      return { product: action.payload }
+    default:
+      return state
+  }
+}
+
+export const productDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_DELETE_RESET:
+      return { success: false }
+    default:
+      return state
+  }
+}
+
+export const productUpdateReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PRODUCT_UPDATE_SUCCESS:
+      return { product: action.payload }
+    default:
+      return state
+  }
+}
+
+export const productCreateReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_SUCCESS:
+      return { product: action.payload }
+    case PRODUCT_CREATE_RESET:
+      return {}
     default:
       return state
   }

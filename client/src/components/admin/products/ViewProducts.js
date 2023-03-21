@@ -2,30 +2,46 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../../../utility/Loader"
 import Message from "../../../utility/Message"
-import { listProducts } from "../../../actions/productActions"
+import { deleteProduct, listProducts } from "../../../actions/productActions"
 import { Table } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
+import { useNavigate } from "react-router-dom"
 // import Rating from "../../../utility/Rating"
 
 const ViewProducts = () => {
+  let navigate = useNavigate()
   const dispatch = useDispatch()
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const productList = useSelector((state) => state.productList)
-  const { loading, products, error } = productList
+  const { products } = productList
+
+  // const productDelete = useSelector((state) => state.productDelete)
+  const loadingErrorSuccess = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, success, message, error } = loadingErrorSuccess
 
   useEffect(() => {
-    dispatch(listProducts())
-  }, [dispatch])
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listProducts())
+    } else {
+      navigate("/login")
+    }
+  }, [dispatch, navigate, userInfo, success])
 
   const deleteHandler = (id) => {
-    // dispatch(deleteUser(id))
+    if (window.confirm("Do you want to delete the selected record?")) {
+      dispatch(deleteProduct(id))
+    }
   }
 
   return (
     <>
+      {message && <Message variant="success" message={message} />}
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger" message={error} />
+        <Message variant="danger" message={""} />
       ) : (
         <Table striped bordered hover responsive size="sm">
           <thead>
@@ -45,12 +61,12 @@ const ViewProducts = () => {
                   <td>{product.name}</td>
                   <td>${product.price}</td>
                   <td>{product.category}</td>
-                  <td>
-                    <LinkContainer to={`edit/${product._id}`}>
+                  <td style={{ display: "flex", flexDirection: "row" }}>
+                    {/* <LinkContainer to={`edit/${product._id}`}>
                       <button type="button" className="btn btn-sm btn-outline-success">
                         Edit
                       </button>
-                    </LinkContainer>
+                    </LinkContainer> */}
                     <button style={{ marginLeft: "10px" }} type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteHandler(product._id)}>
                       Delete
                     </button>

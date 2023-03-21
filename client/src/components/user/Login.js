@@ -7,6 +7,7 @@ import { login } from "../../actions/userActions"
 import { Link } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import { useNavigate } from "react-router-dom"
+import { ERROR } from "../../actions/changeActions"
 const Login = () => {
   let navigate = useNavigate()
   const [email, setEmail] = useState("")
@@ -14,7 +15,10 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
-  const { loading, userInfo, error } = userLogin
+  const { userInfo } = userLogin
+
+  const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
+  const { loading, error } = loadingErrorSuccessObject
 
   useEffect(() => {
     if (userInfo) {
@@ -27,9 +31,13 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    if (email.length === 0 || password.length === 0) {
+      return dispatch({
+        type: ERROR,
+        payload: "Enter login Details",
+      })
+    }
     dispatch(login(email, password))
-    setEmail("")
-    setPassword("")
   }
   return (
     <Container>
