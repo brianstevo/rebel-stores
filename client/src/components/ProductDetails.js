@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Col, Image, Row, ListGroup, Card } from "react-bootstrap"
 import Form from "react-bootstrap/Form"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Rating from "../utility/Rating"
 import { listProductDetails } from "../actions/productActions"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,6 +10,7 @@ import Message from "../utility/Message"
 import { addItemToCart } from "../actions/cartAction"
 
 const ProductDetails = () => {
+  let navigate = useNavigate()
   const [quantity, setQuantity] = useState(1)
   let { id } = useParams()
   const dispatch = useDispatch()
@@ -17,8 +18,11 @@ const ProductDetails = () => {
   const { product } = productDetails
 
   const loadingErrorSuccessObject = useSelector((state) => state.loadingErrorSuccess)
-  const { loading, error } = loadingErrorSuccessObject
+  const { loading, message, error } = loadingErrorSuccessObject
 
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+  const existItem = cartItems.find((x) => x.product === id)
   useEffect(() => {
     dispatch(listProductDetails(id))
   }, [dispatch]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -26,11 +30,15 @@ const ProductDetails = () => {
   const addToCart = () => {
     dispatch(addItemToCart(id, quantity))
   }
+  const goToCart = () => {
+    navigate("/cart")
+  }
   return (
     <>
       <Link className="btn btn-outline-primary btn-sm" to="/">
         Go Back
       </Link>
+      {message && <Message variant="success" message={message} />}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -86,9 +94,21 @@ const ProductDetails = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col className="d-grid gap-2">
-                      <button className="btn btn-primary btn-sm" disabled={product.countInStock === 0} onClick={addToCart}>
+                      {existItem ? (
+                        // <Link className="btn btn-outline-primary btn-sm" to="/cart">
+                        //   Go to Cart
+                        // </Link>
+                        <button className="btn btn-primary btn-sm" onClick={goToCart}>
+                          Go to Cart
+                        </button>
+                      ) : (
+                        <button className="btn btn-primary btn-sm" to="/" disabled={product.countInStock === 0} onClick={addToCart}>
+                          Add to Cart
+                        </button>
+                      )}
+                      {/* <button className="btn btn-primary btn-sm" disabled={product.countInStock === 0} onClick={addToCart}>
                         Add to Cart
-                      </button>
+                      </button> */}
                     </Col>
                   </Row>
                 </ListGroup.Item>

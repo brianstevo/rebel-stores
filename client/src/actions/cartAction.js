@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ERROR } from "./changeActions"
+import { ERROR, SUCCESS_MESSAGE } from "./changeActions"
 export const CART_ADD_ITEM = "CART_ADD_ITEM"
 export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM"
 
@@ -20,6 +20,10 @@ export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
     })
 
     localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
+    dispatch({
+      type: SUCCESS_MESSAGE,
+      payload: "Product Added to Cart",
+    })
   } catch (error) {
     dispatch({
       type: ERROR,
@@ -28,7 +32,7 @@ export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
   }
 }
 
-export const removeFromCart = (id, quantity) => async (dispatch, getState) => {
+export const removeFromCart = (id) => async (dispatch, getState) => {
   dispatch({
     type: CART_REMOVE_ITEM,
     payload: id,
