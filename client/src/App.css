@@ -41,3 +41,7 @@ code {
 .nav-item {
   margin-right: 0px !important;
 }
+
+.stepperBorder {
+  border: 1px solid black;
+}

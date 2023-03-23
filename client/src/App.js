@@ -12,6 +12,9 @@ import ProductList from "./components/admin/products/ProductList"
 import CreateProduct from "./components/admin/products/CreateProduct"
 import ViewProducts from "./components/admin/products/ViewProducts"
 import Cart from "./components/Cart"
+import Shipping from "./components/Shipping"
+import Payment from "./components/Payment"
+import PlaceOrder from "./components/PlaceOrder"
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} exact />
             <Route path="/cart" element={<Cart />} exact />
+            <Route path="/shipping" element={<Shipping />} exact />
+            <Route path="/payment" element={<Payment />} exact />
+            <Route path="/placeorder" element={<PlaceOrder />} exact />
             <Route path="/profile" element={<Profile />} exact />
             <Route path="/signup" element={<Signup />} exact />
             <Route path="/product/:id" element={<ProductDetails />} exact />

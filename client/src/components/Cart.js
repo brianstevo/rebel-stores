@@ -1,19 +1,32 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Card, Col, Form, Image, ListGroup, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import { addItemToCart, removeFromCart } from "../actions/cartAction"
 import Message from "../utility/Message"
 
 const Cart = () => {
+  let navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
-
-  useEffect(() => {})
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id))
   }
+
+  const proceedToCheckout = () => {
+    if (userInfo) {
+      navigate("/shipping")
+    } else {
+      navigate("/login")
+    }
+  }
+
   return (
     <Row>
       <Col md={9}>
@@ -67,7 +80,9 @@ const Cart = () => {
               <ListGroup.Item>
                 <Row>
                   <Col className="d-grid gap-2">
-                    <button className="btn btn-primary btn-sm">Proceed to Checkout</button>
+                    <button className="btn btn-primary btn-sm" onClick={proceedToCheckout}>
+                      Proceed to Checkout
+                    </button>
                   </Col>
                 </Row>
               </ListGroup.Item>
