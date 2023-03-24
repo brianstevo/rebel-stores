@@ -9,6 +9,7 @@ import productRouter from './routes/productRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import paymentRouter from './routes/paymentRoutes.js'
+import orderRouter from './routes/orderRoutes.js'
 const app = express()
 app.use(cors())
 dotenv.config()
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
 app.use('/api/payment', paymentRouter)
+app.use('/api/order', orderRouter)
 app.use(notFound)
 
 app.use(errorHandler)

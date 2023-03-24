@@ -1,10 +1,10 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 const orderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
     orderItems: [
       {
@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema(
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          ref: "Product",
+          ref: 'Product',
         },
         quantity: {
           type: Number,
@@ -55,17 +55,12 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     paymentResult: {
-      id: { type: String },
+      razorpay_order_id: { type: String },
       status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
+      razorpay_payment_id: { type: String },
+      razorpay_signature: { type: String },
     },
     taxPrice: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
-    shippingPrice: {
       type: Number,
       required: true,
       default: 0.0,
@@ -97,6 +92,6 @@ const orderSchema = new mongoose.Schema(
   }
 )
 
-const Order = mongoose.model("Order", orderSchema)
+const Order = mongoose.model('Order', orderSchema)
 
 export default Order
