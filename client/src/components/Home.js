@@ -20,6 +20,7 @@ const Home = () => {
 
   return (
     <>
+      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
       <h1>Latest Product</h1>
       {loading && <Loader />}
       {error && <Message variant='danger' message={'error'} />}

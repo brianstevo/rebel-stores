@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { savePaymentMethod } from '../actions/cartAction'
 import { RESET } from '../actions/changeActions'
+import { ORDER_CREATE_RESET } from '../actions/orderAction'
 import CartStepper from '../utility/CartStepper'
 
 const Payment = () => {
@@ -29,6 +30,7 @@ const Payment = () => {
     e.preventDefault()
     dispatch(savePaymentMethod(paymentMethod))
     dispatch({ type: RESET })
+    dispatch({ type: ORDER_CREATE_RESET })
     navigate('/placeorder')
   }
 
