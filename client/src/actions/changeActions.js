@@ -1,0 +1,7 @@
+export const LOADING = "LOADING"
+export const SUCCESS = "SUCCESS"
+export const ERROR = "ERROR"
+export const RESET = "RESET"
+export const SUCCESS_MESSAGE = "SUCCESS_MESSAGE"
+export const END_LOADING = "END_LOADING"
+export const RETAIN_MESSAGE_LOADING = "RETAIN_MESSAGE_LOADING"
