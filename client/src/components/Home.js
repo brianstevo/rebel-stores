@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { Col, Row } from 'react-bootstrap'
 import Product from '../utility/Product'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from './../actions/productActions'
 import Loader from '../utility/Loader'
-import Message from '../utility/Message'
+// import Message from '../utility/Message'
 const Home = () => {
   const dispatch = useDispatch()
 
@@ -20,17 +19,25 @@ const Home = () => {
 
   return (
     <>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-      <h1>Latest Product</h1>
-      {loading && <Loader />}
-      {error && <Message variant='danger' message={'error'} />}
-      <Row>
-        {products.map((product) => (
-          <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-            <Product product={product}></Product>
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        {
+          /* {error && <Message variant='danger' message={'error'} />} */
+        }
+      ) : (
+        <div className='flex-container'>
+          <h1>Latest Product</h1>
+          <div className='flex-row'>
+            {products.map((product) => (
+              <div className='flex-col-sm-6 flex-col-lg-4 flex-col-xl-3'>
+                {' '}
+                <Product key={product._id} product={product}></Product>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   )
 }
