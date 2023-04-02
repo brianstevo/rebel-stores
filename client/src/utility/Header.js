@@ -57,7 +57,7 @@ const Header = () => {
     //   </Container>
     // </Navbar>
     <nav className={click ? 'navbar menu-active' : 'navbar'}>
-      <Link className='nav__link' to='/'>
+      <Link className='nav__link' to='/' onClick={(e) => setClick(false)}>
         <h1 className='navTitle'>Rebel Store</h1>
       </Link>
       <div className='push-left'>
@@ -67,7 +67,7 @@ const Header = () => {
           <span className='hamburger-line hamburger-line-bottom'></span>
         </button>
         <ul id='primary-menu' className='menu nav-menu'>
-          <li className='menu-item current-menu-item'>
+          <li className='menu-item current-menu-item' onClick={(e) => setClick(false)}>
             <Link className='nav__link' to='/cart'>
               <i className='fa-solid fa-cart-shopping'></i>Cart
             </Link>
@@ -82,11 +82,32 @@ const Header = () => {
               Home
             </Link>
           </li> */}
-          <li className='menu-item '>
-            <Link className='nav__link' to='/login'>
+          {/* <li className='menu-item '>
+            <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
               Login
             </Link>
-          </li>
+          </li> */}
+          {userInfo ? (
+            <>
+              {' '}
+              {/* <li className='menu-item '>
+                <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
+                  Login
+                </Link>
+              </li> */}
+              <li className='menu-item '>
+                <Link className='nav__link' to='/login' onClick={logoutHandler}>
+                  Logout
+                </Link>
+              </li>
+            </>
+          ) : (
+            <li className='menu-item '>
+              <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

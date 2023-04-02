@@ -225,8 +225,8 @@
     font-size: 14px;
   }
   .btn {
-    padding: 5px 10px;
-    font-size: 13px;
+    padding: 7px 10px;
+    font-size: 14px;
   }
   .font-size-resp {
     font-size: 14px;
@@ -235,7 +235,8 @@
     text-align: end;
   }
   .sm-card-border {
-    border-radius: 2px;
+    background-color: #fff;
+    border-radius: 4px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
   .sm-pdL10 {
@@ -250,6 +251,9 @@
   }
   .sm-mgR10 {
     margin-right: 10px;
+  }
+  .sm-mgT10 {
+    margin-top: 10px;
   }
   .sm-mgL10 {
     margin-left: 10px;
@@ -280,6 +284,9 @@
   .select {
     height: 39px;
   }
+  .sm-btn-block {
+    width: 100%;
+  }
 }
 
 @media (min-width: 540px) and (max-width: 768px) {
@@ -295,7 +302,7 @@
     font-weight: 700;
   }
   .btn {
-    padding: 5px 10px;
+    padding: 7spx 10px;
     font-size: 14px;
   }
   .font-size-resp {
@@ -332,6 +339,26 @@
   .pdX30 {
     padding-left: 30px;
     padding-right: 30px;
+  }
+  .stepper-item {
+    font-size: 12px;
+  }
+}
+@media (min-width: 540px) {
+  .md-text-align-center {
+    text-align: center;
+  }
+  .pdX10 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .md-justify-content-center {
+    justify-content: center;
+  }
+}
+@media (max-width: 540px) {
+  .xs-text-align-center {
+    text-align: center;
   }
 }
 @media (min-width: 768px) {

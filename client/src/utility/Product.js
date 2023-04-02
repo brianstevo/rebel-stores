@@ -17,20 +17,18 @@ const Product = ({ product }) => {
     //     </Link>
     //   </Card.Body>
     // </Card>
-    <div className='card' style={{ margin: '20px' }}>
-      <img src={product.image} alt='product' />
+    <div className='card card-border' style={{ margin: '20px' }}>
+      <img className='img-responsive' src={product.image} alt='product' />
       <div className='card-body'>
         <div className='card-row'>
           <div className='card-title'>
             <h4>{product.name}</h4>
             <Rating rating={product.rating} text={`${product.reviews} reviews`}></Rating>
-            <h4 className='text-align-end '>₹{product.price}</h4>
+            <h4 className='text-align-end all-pdB10'>₹{product.price}</h4>
           </div>
           <div className='view-btn'>
             <Link to={`product/${product._id}`}>
-              <button className='btn btn-teal btn-block mgY10' role='button'>
-                View Product
-              </button>
+              <button className='btn btn-teal btn-block '>View Product</button>
             </Link>
           </div>
         </div>

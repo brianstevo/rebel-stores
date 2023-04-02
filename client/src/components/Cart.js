@@ -1,7 +1,7 @@
 import React from 'react'
 // import { Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addItemToCart, removeFromCart } from '../actions/cartAction'
 // import Message from '../utility/Message'
 
@@ -92,41 +92,57 @@ const Cart = () => {
     //   )}
     // </Row>
     <>
-      <div className='flex-container'>
-        <h1>Shopping Cart</h1>
-        <div className='flex-row mgY30 '>
-          <div className=' flex-col-md-9 pdL30'>
-            {cartItems.map((item) => (
-              <div className='flex-row align-items-center sm-card-border sm-pdXY10' key={item.name}>
-                <div className='flex-col-sm-2 flex-col-md-2'>
-                  <img className='img-responsive ' src={item.image} alt={item.name} />
+      <section className='section bg-color-grey'>
+        <div className='flex-container'>
+          <h1 className='headingTitle all-pdY10'>Shopping Cart</h1>
+          <div className='flex-row mgY30 '>
+            <div className=' flex-col-md-9 pdL30'>
+              {cartItems.map((item) => (
+                <div className='flex-row align-items-center card-border sm-pdXY10 md-text-align-center' key={item.name}>
+                  <div className='flex-col-sm-2 flex-col-md-2'>
+                    <img className='img-responsive ' src={item.image} alt={item.name} />
+                  </div>
+                  <div className='flex-col-sm-5 pdX10 sm-pdX10 sm-pdT10 text-decoration-underline'>
+                    <Link to={`/product/${item.product}`}>
+                      <h4>{item.name} </h4>
+                    </Link>
+                  </div>
+                  <div className='flex-col-xs-4 flex-col-sm-2 pdX10 xs-text-align-center'>₹{item.price}</div>
+                  <div className='flex-col-xs-4 flex-col-sm-2 pdX10 sm-pdT10 xs-text-align-center'>
+                    <select className='select' name='quantity' id='quantity' value={item.quantity} onChange={(e) => dispatch(addItemToCart(item.product, e.target.value))}>
+                      {[...Array(item.countInStock).keys()].map((x) => (
+                        <option key={x + 1} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className='flex-col-xs-4 flex-col-sm-1 xs-text-align-center '>
+                    <i className='fa-solid fa-trash' onClick={() => removeFromCartHandler(item.product)}></i>
+                  </div>
                 </div>
-                <div className='flex-col-sm-3 flex-col-md-3 pdX10 sm-pdX10 sm-pdT10'>{item.name}</div>
-                <div className='flex-col-sm-2 pdX10 sm-pdX10 ssm-pdT10'>₹{item.price}</div>
-                <div className='flex-col-xs-6 flex-col-sm-2 pdX10 sm-pdT10'>
-                  <select class='select sm-mgL10' name='quantity' id='quantity' value={item.quantity} onChange={(e) => dispatch(addItemToCart(item.product, e.target.value))}>
-                    {[...Array(item.countInStock).keys()].map((x) => (
-                      <option key={x + 1} value={x + 1}>
-                        {x + 1}
-                      </option>
-                    ))}
-                  </select>
+              ))}
+            </div>
+            <div className='flex-col-md-3 card-border height-100-percent'>
+              <div className='flex-row text-align-center '>
+                <div className='flex-col-xs-6'>
+                  <h4>Quantity:</h4>
                 </div>
-                <div className='flex-col-xs-6 flex-col-sm-3 sm-text-align-end '>
-                  <button className='btn-md btn-black sm-mgR10' onClick={() => removeFromCartHandler(item.product)}>
-                    Remove from Cart
-                  </button>
-                </div>
+                <div className='flex-col-xs-6  xs-text-align-center'>{cartItems.reduce((acc, item) => acc + Number(item.quantity), 0)}</div>
               </div>
-            ))}
-          </div>
-          <div className='flex-col-md-3'>
-            <button className='btn btn-block btn-black' onClick={proceedToCheckout}>
-              Proceed to Checkout
-            </button>
+              <div className='flex-row text-align-center '>
+                <div className='flex-col-xs-6'>
+                  <h4>Total Price:</h4>
+                </div>
+                <div className='flex-col-xs-6'>₹{cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)}</div>
+              </div>
+              <button className='btn btn-block btn-black' onClick={proceedToCheckout}>
+                Proceed to Checkout
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }
