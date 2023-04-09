@@ -72,29 +72,17 @@ const Header = () => {
               <i className='fa-solid fa-cart-shopping'></i>Cart
             </Link>
           </li>
-          {/* <li className='menu-item current-menu-item'>
-            <Link className='nav__link' to='#'>
-              Home
-            </Link>
-          </li>
-          <li className='menu-item current-menu-item'>
-            <Link className='nav__link' to='#'>
-              Home
-            </Link>
-          </li> */}
-          {/* <li className='menu-item '>
-            <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
-              Login
-            </Link>
-          </li> */}
           {userInfo ? (
             <>
-              {' '}
-              {/* <li className='menu-item '>
-                <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
-                  Login
-                </Link>
-              </li> */}
+              <li className='menu-item dropdown floatRight'>
+                <Link className='dropbtn'>{userInfo.name}</Link>
+                <div className='dropdown-content'>
+                  <Link className='mg0' to='/profile' onClick={(e) => setClick(false)}>
+                    Profile
+                  </Link>
+                  <Link className='mg0'>Profile</Link>
+                </div>
+              </li>
               <li className='menu-item '>
                 <Link className='nav__link' to='/login' onClick={logoutHandler}>
                   Logout
@@ -106,6 +94,19 @@ const Header = () => {
               <Link className='nav__link' to='/login' onClick={(e) => setClick(false)}>
                 Login
               </Link>
+            </li>
+          )}
+          {userInfo?.isAdmin && (
+            <li className='menu-item dropdown floatRight'>
+              <Link className='dropbtn'>Admin DashBoard</Link>
+              <div className='dropdown-content'>
+                <Link className='mg0' to='/admin/users' onClick={(e) => setClick(false)}>
+                  Users
+                </Link>
+                <Link className='mg0' to='/admin/products/view' onClick={(e) => setClick(false)}>
+                  Products
+                </Link>
+              </div>
             </li>
           )}
         </ul>

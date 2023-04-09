@@ -12,6 +12,8 @@ import Shipping from './components/Shipping'
 import Payment from './components/Payment'
 import PlaceOrder from './components/PlaceOrder'
 import Order from './components/Order'
+import Profile from './components/user/Profile'
+import Users from './components/admin/Users'
 
 function App() {
   return (
@@ -37,6 +39,14 @@ function App() {
           <Route path='/order/:id' element={<Order />} exact />
           <Route path='/profile' element={<Profile />} exact />
           <Route path='/signup' element={<Signup />} exact />*/}
+          {/* <Route path='/admin/products' element={<ProductList />} exact>
+            <Route path='create' element={<CreateProduct />} exact />
+            <Route path='edit/:id' element={<CreateProduct />} exact />
+            <Route path='view' element={<ViewProducts />} exact />
+            <Route index element={<ViewProducts />} exact />
+          </Route> */}
+          <Route path='/admin/users' element={<Users />} exact />
+          <Route path='/profile' element={<Profile />} exact />
           <Route path='/order/:id' element={<Order />} exact />
           <Route path='/placeorder' element={<PlaceOrder />} exact />
           <Route path='/shipping' element={<Shipping />} exact />

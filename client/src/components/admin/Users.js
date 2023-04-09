@@ -1,10 +1,9 @@
-import React, { useEffect } from "react"
-import { Table } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import Loader from "../../utility/Loader"
-import Message from "../../utility/Message"
-import { fetchUsers, deleteUser } from "../../actions/userActions"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../../utility/Loader'
+import Message from '../../utility/Message'
+import { fetchUsers, deleteUser } from '../../actions/userActions'
+import { useNavigate } from 'react-router-dom'
 
 const Users = () => {
   let navigate = useNavigate()
@@ -22,7 +21,7 @@ const Users = () => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(fetchUsers())
     } else {
-      navigate("/login")
+      navigate('/login')
     }
   }, [dispatch, navigate, userInfo, success])
 
@@ -31,45 +30,47 @@ const Users = () => {
   }
   return (
     <>
-      <h1>Users</h1>
-      {message && <Message variant="success" message={message} />}
+      {message && <Message variant='success' message={message} />}
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger" message={error} />
+        <Message variant='error' message={error} />
       ) : (
-        <Table striped bordered hover responsive size="sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Admin</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users &&
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.isAdmin ? "Y" : "N"}</td>
-                  <td>
-                    {/* <LinkContainer to={`/admin/users/${user._id}/edit`}>
+        <section className='flex-container'>
+          <h1 className='headingTitle all-pdY10'>Users</h1>
+          <div style={{ overflowX: 'auto' }}>
+            <table id='tableData' className='mgY30'>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Admin</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users &&
+                  users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user._id}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>{user.isAdmin ? 'Y' : 'N'}</td>
+                      <td>
+                        {/* <LinkContainer to={`/admin/users/${user._id}/edit`}>
                       <button type="button" className="btn btn-sm btn-outline-success">
                         Edit
                       </button>
                     </LinkContainer> */}
-                    <button style={{ marginLeft: "10px" }} type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteHandler(user._id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+                        <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash' onClick={() => deleteHandler(user._id)}></i>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
     </>
   )

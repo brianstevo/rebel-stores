@@ -39,7 +39,7 @@ const SignupUser = () => {
     <section className='section bg-color-grey'>
       <div className='flex-container'>
         <div className='flex-row pdT50 justify-content-center'>
-          <div className=' flex-col-sm-6 flex-col-lg-4 pd30 card-border'>
+          <div className='flex-col-sm-6 flex-col-md-6 flex-col-lg-4 pd30 card-border'>
             <form className='form' onSubmit={handleSubmit(onSubmit)}>
               <label className='label'>Name</label>
               <input
@@ -65,7 +65,7 @@ const SignupUser = () => {
               {errors.mail && <p className='red'>{errors.mail?.message}</p>}
               <label className='label'>Password</label>
               <input type='password' className='mgY10 text' {...register('password', { required: true })} aria-invalid={errors.password ? 'true' : 'false'} />
-              {errors.password?.type === 'required' && <p className='red'>First name is required</p>}
+              {errors.password?.type === 'required' && <p className='red'>Password is required</p>}
               <button className='mgT20 btn-blue btn-block btn' type='submit'>
                 Signup
               </button>

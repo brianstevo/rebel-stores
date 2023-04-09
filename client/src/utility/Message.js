@@ -7,7 +7,6 @@ const Message = ({ variant = 'info', message, disable = false }) => {
   const [show, setShow] = useState(true)
 
   const handleClick = () => {
-    console.log('s')
     dispatch({
       type: RESET,
     })
@@ -19,9 +18,9 @@ const Message = ({ variant = 'info', message, disable = false }) => {
       //   {message}
       // </Alert>
       <div className={'alert ' + variant}>
-        <button className='alert-close' onClick={() => console.log('button clicked')}>
+        <div className='alert-close' onClick={(e) => handleClick()}>
           &times;
-        </button>
+        </div>
         <p>{message}</p>
       </div>
     )

@@ -428,4 +428,10 @@
   .font-size-resp {
     font-size: 16px;
   }
+  .pdL30 {
+    padding-left: 30px;
+  }
+  .floatRight {
+    float: 'right';
+  }
 }

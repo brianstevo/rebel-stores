@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart } from '../actions/cartAction'
 import { RESET } from '../actions/changeActions'
 import Loader from '../utility/Loader'
+import Message from '../utility/Message'
 
 const ProductDetails = () => {
   let navigate = useNavigate()
@@ -119,7 +120,7 @@ const ProductDetails = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        ''
+        <Message variant='error' message={error} />
       ) : (
         <section>
           <div className='flex-container mgY20'>
