@@ -79,6 +79,8 @@ body {
   flex-direction: row;
   padding: 15px 50px;
   z-index: 1000;
+  position: fixed;
+  width: 100%;
 }
 .push-left {
   margin-left: auto;
@@ -163,6 +165,9 @@ body {
 }
 .sub-nav:hover {
   display: block;
+}
+.active {
+  color: #14b8a6 !important;
 }
 @media screen and (max-width: 768px) {
   .nav-menu {
@@ -521,6 +526,64 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+/*sidebar*/
+.side-nav {
+  position: absolute;
+  width: 250px;
+  background-color: #323541;
+  /* background: #1E2027; 292c35  323541*/
+  height: 100vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  top: 0px;
+  left: -250px;
+  z-index: 2;
+  transform: translate(0px);
+  transition: all 0.5s ease;
+  overflow-y: auto;
+}
+
+.open {
+  transform: translate(250px);
+  top: 0;
+}
+
+.fas {
+  font-size: 2em;
+}
+
+.fa-bars {
+  position: relative;
+  top: 15px;
+  left: 35px;
+}
+
+.fa-times {
+  text-align: right;
+  margin-top: 15px;
+  color: white;
+  margin-right: 15px;
+}
+
+.side-nav .fa-times {
+  display: block;
+}
+
+.side-nav a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+}
+.side-nav a:hover {
+  background-color: #475569;
+}
+
+.transition {
+  transition: all 0.5s ease;
+}
+
+/*end of sidebar*/
+
 /*Utility*/
 
 .mg0 {
@@ -688,4 +751,8 @@ hr {
 .red {
   padding-bottom: 5px;
   color: #d8000c;
+}
+.stickyGapMain {
+  top: 60px;
+  position: relative;
 }

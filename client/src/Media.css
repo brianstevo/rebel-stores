@@ -214,7 +214,7 @@
 }
 @media (max-width: 540px) {
   .headingTitle {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
   }
   .subTitle {
@@ -291,7 +291,7 @@
 
 @media (min-width: 540px) and (max-width: 768px) {
   .headingTitle {
-    font-size: 24px;
+    font-size: 27px;
     font-weight: 700;
   }
   .description {

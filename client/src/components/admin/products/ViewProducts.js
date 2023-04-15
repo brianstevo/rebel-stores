@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../utility/Loader'
 import Message from '../../../utility/Message'
 import { deleteProduct, listProducts } from '../../../actions/productActions'
-import { Table } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 // import Rating from "../../../utility/Rating"
 
@@ -40,40 +39,43 @@ const ViewProducts = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger' message={''} />
+        <Message variant='error' message={error} />
       ) : (
-        <Table striped bordered hover responsive size='sm'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products &&
-              products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>₹{product.price}</td>
-                  <td>{product.category}</td>
-                  <td style={{ display: 'flex', flexDirection: 'row' }}>
-                    {/* <LinkContainer to={`edit/${product._id}`}>
+        <>
+          <h1 className='headingTitle all-pdY10'>View Products</h1>
+          <div style={{ overflowX: 'auto' }}>
+            <table id='tableData' className='mgY30'>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products &&
+                  products.map((product) => (
+                    <tr key={product._id}>
+                      <td>{product._id}</td>
+                      <td>{product.name}</td>
+                      <td>₹{product.price}</td>
+                      <td>{product.category}</td>
+                      <td style={{ display: 'flex', flexDirection: 'row' }}>
+                        {/* <LinkContainer to={`edit/${product._id}`}>
                       <button type="button" className="btn btn-sm btn-outline-success">
                         Edit
                       </button>
                     </LinkContainer> */}
-                    <button style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-danger btn-sm' onClick={() => deleteHandler(product._id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+                        <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash' onClick={() => deleteHandler(product._id)}></i>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </>
   )

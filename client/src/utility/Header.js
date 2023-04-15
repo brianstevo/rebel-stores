@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 const Header = () => {
   const [click, setClick] = useState(false)
   const dispatch = useDispatch()
@@ -68,9 +68,9 @@ const Header = () => {
         </button>
         <ul id='primary-menu' className='menu nav-menu'>
           <li className='menu-item current-menu-item' onClick={(e) => setClick(false)}>
-            <Link className='nav__link' to='/cart'>
+            <NavLink to='/cart' className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'active' : '')}>
               <i className='fa-solid fa-cart-shopping'></i>Cart
-            </Link>
+            </NavLink>
           </li>
           {userInfo ? (
             <>
@@ -98,7 +98,9 @@ const Header = () => {
           )}
           {userInfo?.isAdmin && (
             <li className='menu-item dropdown floatRight'>
-              <Link className='dropbtn'>Admin DashBoard</Link>
+              <NavLink to='/admin' className={({ isActive, isPending }) => (isPending ? 'pending dropbtn' : isActive ? 'active dropbtn' : 'dropbtn')}>
+                Admin DashBoard
+              </NavLink>
               <div className='dropdown-content'>
                 <Link className='mg0' to='/admin/users' onClick={(e) => setClick(false)}>
                   Users
