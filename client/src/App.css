@@ -19,7 +19,7 @@ body {
 /*Loader*/
 .loader {
   position: absolute;
-  top: 0;
+  top: 400px;
   bottom: 0;
   right: 0;
   left: 0;
@@ -384,7 +384,7 @@ body {
   margin-bottom: 6px;
 }
 
-.stepper-item.active {
+.stepper-active {
   font-weight: bold;
 }
 
@@ -533,7 +533,7 @@ body {
   width: 250px;
   background-color: #323541;
   /* background: #1E2027; 292c35  323541*/
-  height: 100vh;
+  min-height: 100vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   top: 0px;
   left: -250px;
@@ -553,7 +553,7 @@ body {
 }
 
 .fa-bars {
-  position: relative;
+  position: absolute;
   top: 15px;
   left: 35px;
 }
@@ -606,7 +606,7 @@ body {
   align-items: center;
 }
 .text-align-center {
-  align-items: center;
+  text-align: center;
 }
 .card-border {
   border-radius: 5px;
@@ -735,6 +735,9 @@ hr {
   margin-bottom: 5px;
 }
 
+.pdT60 {
+  padding-top: 60px;
+}
 .label {
   font-size: 14px;
   font-weight: 600;

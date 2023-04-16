@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../utility/Loader'
 import Message from '../../../utility/Message'
 import { deleteProduct, listProducts } from '../../../actions/productActions'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import Rating from "../../../utility/Rating"
 
 const ViewProducts = () => {
@@ -38,11 +38,11 @@ const ViewProducts = () => {
       {message && <Message variant='success' message={message} />}
       {loading ? (
         <Loader />
-      ) : error ? (
-        <Message variant='error' message={error} />
       ) : (
-        <>
-          <h1 className='headingTitle all-pdY10'>View Products</h1>
+        <section className='flex-container'>
+          {error && <Message variant='error' message={error} />}
+          {message && <Message variant='success' message={message} />}
+          <h1 className='headingTitle all-pdY10 text-align-center '>View Products</h1>
           <div style={{ overflowX: 'auto' }}>
             <table id='tableData' className='mgY30'>
               <thead>
@@ -62,12 +62,15 @@ const ViewProducts = () => {
                       <td>{product.name}</td>
                       <td>₹{product.price}</td>
                       <td>{product.category}</td>
-                      <td style={{ display: 'flex', flexDirection: 'row' }}>
+                      <td>
                         {/* <LinkContainer to={`edit/${product._id}`}>
                       <button type="button" className="btn btn-sm btn-outline-success">
                         Edit
                       </button>
                     </LinkContainer> */}
+                        <Link to={`edit/${product._id}`}>
+                          <i style={{ marginLeft: '10px' }} className='fa-solid fa-pen-to-square'></i>
+                        </Link>
                         <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash' onClick={() => deleteHandler(product._id)}></i>
                       </td>
                     </tr>
@@ -75,7 +78,7 @@ const ViewProducts = () => {
               </tbody>
             </table>
           </div>
-        </>
+        </section>
       )}
     </>
   )

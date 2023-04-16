@@ -58,13 +58,11 @@ const ProductList = () => {
               </li>
             </ul>
           </nav>
-          <i class='fas fa-bars' onClick={(e) => setClick(true)}></i>
-          <section className='flex-container'>
-            {/* <h1 className='headingTitle all-pdY10 mgY10'>Products</h1> */}
-            {/* <section className='mgY30'>
+          <i className='fas fa-bars' onClick={(e) => setClick(true)}></i>
+          {/* <h1 className='headingTitle all-pdY10 mgY10'>Products</h1> */}
+          {/* <section className='mgY30'>
             </section> */}
-            <Outlet />
-          </section>
+          <Outlet />
         </>
       )}
     </>

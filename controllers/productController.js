@@ -1,5 +1,6 @@
-import asyncHandler from "express-async-handler"
-import Product from "../models/Product.js"
+import asyncHandler from 'express-async-handler'
+import Product from '../models/Product.js'
+import cloudinary from 'cloudinary'
 
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
@@ -12,22 +13,46 @@ const getProduct = asyncHandler(async (req, res) => {
     res.json(product)
   } else {
     res.status(404)
-    throw new Error("product not found")
+    throw new Error('product not found')
   }
 })
 
+const imageUploadToCloudinary = asyncHandler(async (req, res, next) => {
+  // console.log(req.fields)
+  // console.log(req.files)
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  })
+
+  console.log(typeof process.env.CLOUDINARY_API_KEY)
+  try {
+    const result = await cloudinary.uploader.upload(req.files.file.path, { public_id: 'rebelstore' })
+
+    console.log(result)
+    req.body.url = result.secure_url
+  } catch (e) {
+    console.log(e)
+    res.status(400)
+    throw new Error('Image Upload failed')
+  }
+  next()
+})
+
 const createProduct = asyncHandler(async (req, res) => {
-  const { name } = req.body
+  console.log(req.fields)
+  const { name, price, brand, category, countInStock, description } = req.fields
   const product = new Product({
     name: name,
-    price: req.body.price,
+    price: price,
     user: req.user._id,
-    image: req.body.image,
-    brand: req.body.brand,
-    category: req.body.category,
-    countInStock: req.body.countInStock,
+    image: req.body.url,
+    brand: brand,
+    category: category,
+    countInStock: countInStock,
     reviews: 0,
-    description: req.body.description,
+    description: description,
   })
 
   const createdProduct = await product.save()
@@ -35,11 +60,11 @@ const createProduct = asyncHandler(async (req, res) => {
   if (createdProduct) {
     res.status(201).json({
       createdProduct,
-      message: "Product Created Successfully",
+      message: 'Product Created Successfully',
     })
   } else {
     res.status(400)
-    throw new Error("Product creation failed")
+    throw new Error('Product creation failed')
   }
 })
 
@@ -59,11 +84,11 @@ const updateProduct = asyncHandler(async (req, res) => {
     const updatedProduct = await fetchedProduct.save()
     res.json({
       updatedProduct,
-      message: "Product updated",
+      message: 'Product updated',
     })
   } else {
     res.status(404)
-    throw new Error("Product does not exit")
+    throw new Error('Product does not exit')
   }
 })
 
@@ -72,12 +97,12 @@ const deleteProduct = asyncHandler(async (req, res) => {
   if (fetchProduct) {
     await fetchProduct.remove()
     res.json({
-      message: "Product deleted successfully",
+      message: 'Product deleted successfully',
     })
   } else {
     res.status(404)
-    throw new Error("Product does not exit")
+    throw new Error('Product does not exit')
   }
 })
 
-export { getProducts, getProduct, createProduct, deleteProduct, updateProduct }
+export { getProducts, getProduct, createProduct, deleteProduct, updateProduct, imageUploadToCloudinary }

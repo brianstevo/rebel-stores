@@ -11,6 +11,7 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const logoutHandler = () => {
+    setClick(false)
     dispatch(logout())
     navigate('/')
   }
@@ -98,14 +99,12 @@ const Header = () => {
           )}
           {userInfo?.isAdmin && (
             <li className='menu-item dropdown floatRight'>
-              <NavLink to='/admin' className={({ isActive, isPending }) => (isPending ? 'pending dropbtn' : isActive ? 'active dropbtn' : 'dropbtn')}>
-                Admin DashBoard
-              </NavLink>
+              <Link className='dropbtn'>Admin DashBoard</Link>
               <div className='dropdown-content'>
                 <Link className='mg0' to='/admin/users' onClick={(e) => setClick(false)}>
                   Users
                 </Link>
-                <Link className='mg0' to='/admin/products/view' onClick={(e) => setClick(false)}>
+                <Link className='mg0' to='/admin/products' onClick={(e) => setClick(false)}>
                   Products
                 </Link>
               </div>

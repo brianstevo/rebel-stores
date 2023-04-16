@@ -32,6 +32,7 @@ mongoDB()
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+// app.use(formidableMiddleware())
 app.use(morgan('dev'))
 
 app.get('/', (req, res) => {

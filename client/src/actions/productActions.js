@@ -100,19 +100,20 @@ export const updateProduct = (id, name) => async (dispatch, getState) => {
   }
 }
 
-export const createProduct = (name, price, image, category, brand, countInStock, description) => async (dispatch, getState) => {
+export const createProduct = (formData) => async (dispatch, getState) => {
   try {
+    console.log(formData)
     dispatch({ type: LOADING })
     const {
       userLogin: { userInfo },
     } = getState()
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    const { data } = await axios.post(`/api/products/create`, { name, price, image, category, brand, countInStock, description }, config)
+    const { data } = await axios.post(`/api/products/create`, formData, config)
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
       payload: data,

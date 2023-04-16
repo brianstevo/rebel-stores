@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../utility/Loader'
 import Message from '../../utility/Message'
@@ -8,9 +8,6 @@ import { useForm } from 'react-hook-form'
 
 const Profile = () => {
   let navigate = useNavigate()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
@@ -38,11 +35,9 @@ const Profile = () => {
     } else {
       if (!user?.name) {
         dispatch(userDetails())
-      } else {
-        setName(user.name)
-        setEmail(user.email)
       }
     }
+    //eslint-disable-next-line
   }, [dispatch, navigate, user, userInfo])
 
   const onSubmit = (data, e) => {
@@ -50,36 +45,8 @@ const Profile = () => {
     dispatch(updateProfile(data.name, data.mail, data.password))
   }
   return (
-    // <Row className="justify-content-md-center">
-    //   <Col md={4}>
-    //     <Card className="rounded p-3 my-2">
-    //       <h1>User Profile</h1>
-    //       {error && <Message variant="danger" message={error} />}
-    //       {success && <Message variant="success" message={message} />}
-    //       {loading && <Loader />}
-    //       <Form onSubmit={submitHandler}>
-    //         <Form.Group controlId="name">
-    //           <Form.Label>Name</Form.Label>
-    //           <Form.Control type="text" placeholder="Enter Your Name" value={name} onChange={(e) => setName(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId="email">
-    //           <Form.Label>Email Address</Form.Label>
-    //           <Form.Control type="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId="password">
-    //           <Form.Label>Password</Form.Label>
-    //           <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-    //         </Form.Group>
-    //         <Button variant="primary" type="submit" className="mt-3">
-    //           Update
-    //         </Button>
-    //       </Form>
-    //     </Card>
-    //   </Col>
-    //   <Col md={8}>
-    //     <h1>Order Details</h1>
-    //   </Col>
-    // </Row>
+    <>
+    {loading &&  <Loader />}
     <section className='section bg-color-grey'>
       <div className='flex-container'>
         <div className='flex-row pdT50 justify-content-center'>
@@ -124,6 +91,7 @@ const Profile = () => {
         </div>
       </div>
     </section>
+    </>
   )
 }
 
