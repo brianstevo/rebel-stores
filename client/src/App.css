@@ -537,7 +537,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   top: 0px;
   left: -250px;
-  z-index: 2;
+  z-index: 100;
   transform: translate(0px);
   transition: all 0.5s ease;
   overflow-y: auto;
@@ -556,6 +556,7 @@ body {
   position: absolute;
   top: 15px;
   left: 35px;
+  z-index: 99;
 }
 
 .fa-times {
@@ -758,4 +759,7 @@ hr {
 .stickyGapMain {
   top: 60px;
   position: relative;
+}
+.full-width {
+  width: 100%;
 }

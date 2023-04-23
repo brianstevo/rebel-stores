@@ -17,6 +17,7 @@ import Users from './components/admin/Users'
 import ProductList from './components/admin/products/ProductList'
 import ViewProducts from './components/admin/products/ViewProducts'
 import CreateProduct from './components/admin/products/CreateProduct'
+import EditProduct from './components/admin/products/EditProduct'
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Routes>
           <Route path='/admin/products' element={<ProductList />} exact>
             <Route path='create' element={<CreateProduct />} exact />
-            <Route path='edit/:id' element={<CreateProduct />} exact />
+            <Route path='edit/:id' element={<EditProduct />} exact />
             <Route path='view' element={<ViewProducts />} exact />
             <Route index element={<ViewProducts />} exact />
           </Route>

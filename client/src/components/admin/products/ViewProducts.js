@@ -68,7 +68,7 @@ const ViewProducts = () => {
                         Edit
                       </button>
                     </LinkContainer> */}
-                        <Link to={`edit/${product._id}`}>
+                        <Link to={`/admin/products/edit/${product._id}`}>
                           <i style={{ marginLeft: '10px' }} className='fa-solid fa-pen-to-square'></i>
                         </Link>
                         <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash' onClick={() => deleteHandler(product._id)}></i>
