@@ -71,35 +71,6 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 }
 
-export const updateProduct = (id, name) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: LOADING })
-    const {
-      userLogin: { userInfo },
-    } = getState()
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    }
-    const { data } = await axios.put(`/api/products/edit/${id}`, { name }, config)
-    dispatch({
-      type: PRODUCT_UPDATE_SUCCESS,
-      payload: data,
-    })
-    dispatch({
-      type: SUCCESS_MESSAGE,
-      payload: data.message,
-    })
-  } catch (error) {
-    dispatch({
-      type: ERROR,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-    })
-  }
-}
-
 export const createProduct = (formData) => async (dispatch, getState) => {
   try {
     console.log(formData)
@@ -115,9 +86,30 @@ export const createProduct = (formData) => async (dispatch, getState) => {
     }
     const { data } = await axios.post(`/api/products/create`, formData, config)
     dispatch({
-      type: PRODUCT_CREATE_SUCCESS,
-      payload: data,
+      type: SUCCESS_MESSAGE,
+      payload: data.message,
     })
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const updateProduct = (id, formData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await axios.put(`/api/products/edit/${id}`, formData, config)
     dispatch({
       type: SUCCESS_MESSAGE,
       payload: data.message,

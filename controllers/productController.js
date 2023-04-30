@@ -26,11 +26,8 @@ const imageUploadToCloudinary = asyncHandler(async (req, res, next) => {
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
 
-  console.log(typeof process.env.CLOUDINARY_API_KEY)
   try {
     const result = await cloudinary.uploader.upload(req.files.file.path, { public_id: 'rebelstore' })
-
-    console.log(result)
     req.body.url = result.secure_url
   } catch (e) {
     console.log(e)
@@ -69,22 +66,36 @@ const createProduct = asyncHandler(async (req, res) => {
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
+  console.log('hi')
+  const { name, price, brand, category, countInStock, description, imageUpload } = req.fields
   const fetchedProduct = await Product.findById(req.params.id)
   if (fetchedProduct) {
-    fetchedProduct.name = req.body.name
-    fetchedProduct.price = req.body.price
+    fetchedProduct.name = name
+    fetchedProduct.price = price
     fetchedProduct.user = req.user._id
-    fetchedProduct.category = req.body.category
-    fetchedProduct.brand = req.body.brand
-    fetchedProduct.countInStock = req.body.countInStock
-    fetchedProduct.description = req.body.description
-    if (req.body.image) {
-      fetchedProduct.image = req.body.image
+    fetchedProduct.category = category
+    fetchedProduct.brand = brand
+    fetchedProduct.countInStock = countInStock
+    fetchedProduct.description = description
+    if (imageUpload === 'Y') {
+      cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      })
+      try {
+        const result = await cloudinary.uploader.upload(req.files.file.path, { public_id: 'rebelstore' })
+        fetchedProduct.image = result.secure_url
+      } catch (e) {
+        console.log(e)
+        res.status(400)
+        throw new Error('Image Upload failed')
+      }
     }
     const updatedProduct = await fetchedProduct.save()
     res.json({
       updatedProduct,
-      message: 'Product updated',
+      message: 'Product Updated',
     })
   } else {
     res.status(404)

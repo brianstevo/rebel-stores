@@ -27,7 +27,9 @@ function App() {
         <Routes>
           <Route path='/admin/products' element={<ProductList />} exact>
             <Route path='create' element={<CreateProduct />} exact />
+            <Route path='edit' element={<EditProduct />} exact />
             <Route path='edit/:id' element={<EditProduct />} exact />
+
             <Route path='view' element={<ViewProducts />} exact />
             <Route index element={<ViewProducts />} exact />
           </Route>

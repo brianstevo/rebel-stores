@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../utility/Loader'
 import Message from '../../../utility/Message'
-import { useNavigate, useParams } from 'react-router-dom'
-import { createProduct, listProductDetails, PRODUCT_CREATE_RESET } from '../../../actions/productActions'
+import { useNavigate } from 'react-router-dom'
+import { updateProduct, PRODUCT_CREATE_RESET } from '../../../actions/productActions'
 import { useForm } from 'react-hook-form'
 
 const EditProduct = () => {
-  let { id } = useParams()
+  // let { id } = useParams()
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
-    getValues,
   } = useForm()
+
+  const [image, setImage] = useState()
 
   let navigate = useNavigate()
 
@@ -29,9 +30,12 @@ const EditProduct = () => {
   const { product } = productDetails
 
   useEffect(() => {
-    dispatch(listProductDetails(id))
+    // dispatch(listProductDetails(id))
     if (!userInfo.isAdmin) {
       navigate('/login')
+    }
+    if (!product) {
+      navigate('/admin/products/view')
     }
     reset({
       name: product.name,
@@ -48,19 +52,30 @@ const EditProduct = () => {
       })
     }
     //eslint-disable-next-line
-  }, [dispatch, navigate, userInfo, success])
+  }, [product, navigate, userInfo, success])
 
   const submitHandler = (data, e) => {
     e.preventDefault()
     const formData = new FormData()
-    formData.append('file', data.image[0])
+    if (data.image.length === 0) {
+      formData.append('image', product.image)
+      formData.append('imageUpload', 'N')
+    } else {
+      formData.append('file', data.image[0])
+      formData.append('imageUpload', 'Y')
+    }
     formData.append('price', data.price)
     formData.append('category', data.category)
     formData.append('brand', data.brand)
     formData.append('countInStock', data.quantity)
     formData.append('name', data.name)
     formData.append('description', data.name)
-    dispatch(createProduct(formData))
+    dispatch(updateProduct(product._id, formData))
+  }
+
+  const handleImage = async (e) => {
+    const base64 = await convertToBase64(e.target.files[0])
+    setImage(base64)
   }
 
   return (
@@ -93,17 +108,8 @@ const EditProduct = () => {
                 />
                 {errors.price && <p className='red'>{errors.price?.message}</p>}
                 <label className='label'>Image</label>
-                <input
-                  type='file'
-                  accept='.png,.jpg,.jpeg,.webp'
-                  className='mgY10 text'
-                  {...register('image', {
-                    required: 'Image is required',
-                  })}
-                  aria-invalid={errors.image ? 'true' : 'false'}
-                />
-                {errors.image && <p className='red'>{errors.image?.message}</p>}
-                {/* {getValues('image').length > 0 ? getValues('image') : <img className='full-width' src={product.image} />} */}
+                <input type='file' accept='.png,.jpg,.jpeg,.webp' className='mgY10 text' {...register('image')} onChange={handleImage} />
+                {image ? <img className='full-width' src={image} alt='product' /> : <img className='full-width' src={product.image} alt='product' />}
                 <label className='label'>Category</label>
                 <input
                   className='mgY10 text'
@@ -142,7 +148,7 @@ const EditProduct = () => {
                 />
                 {errors.description && <p className='red'>{errors.description?.message}</p>}
                 <button className='mgT20 btn-blue btn-block btn' type='submit'>
-                  Create Product
+                  Edit Product
                 </button>
               </form>
             </div>
@@ -157,3 +163,16 @@ const EditProduct = () => {
 }
 
 export default EditProduct
+
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    }
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}

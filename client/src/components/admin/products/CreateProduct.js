@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../utility/Loader'
 import Message from '../../../utility/Message'
@@ -12,6 +12,8 @@ const CreateProduct = () => {
     formState: { errors },
     handleSubmit,
   } = useForm()
+
+  const [image, setImage] = useState()
 
   let navigate = useNavigate()
 
@@ -48,61 +50,12 @@ const CreateProduct = () => {
     dispatch(createProduct(formData))
   }
 
-  // const handleImage = async (e) => {
-  //   console.log(e.target)
-  //   console.log(e.target.files[0])
-  // const base64 = await convertToBase64(e.target.files[0])
-  // setImage(base64)
-  // }
+  const handleImage = async (e) => {
+    const base64 = await convertToBase64(e.target.files[0])
+    setImage(base64)
+  }
 
   return (
-    // <Container>
-    //   <Row className=' my-3 mx-3'>
-    //     <Col xs={12} md={5}>
-    //       <h4>Create Product</h4>
-    //       {error && <Message variant='danger' message={error} />}
-    //       {loading && <Loader />}
-    //       <Form onSubmit={submitHandler}>
-    //         <Form.Group controlId='name'>
-    //           <Form.Label>Product Name</Form.Label>
-    //           <Form.Control type='text' placeholder='Enter Name' value={name} onChange={(e) => setName(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId='price'>
-    //           <Form.Label>Price</Form.Label>
-    //           <Form.Control type='number' placeholder='Enter Price' value={price} onChange={(e) => setPrice(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId='image'>
-    //           <Form.Label>Image</Form.Label>
-    //           <Form.Control type='file' accept='.png,.jpg,.jpeg ,.webp' placeholder='Enter Image' onChange={handleImage} />
-    //         </Form.Group>
-    //         {image && (
-    //           <div className='createImage mt-3 me-3'>
-    //             <img src={image} alt='' style={{ width: '300px', height: '300px', objectFit: 'contain' }} />
-    //           </div>
-    //         )}
-    //         <Form.Group controlId='category'>
-    //           <Form.Label>Category</Form.Label>
-    //           <Form.Control type='text' placeholder='Enter Category' value={category} onChange={(e) => setCategory(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId='brand'>
-    //           <Form.Label>Brand</Form.Label>
-    //           <Form.Control type='text' placeholder='Enter Brand' value={brand} onChange={(e) => setBrand(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId='countInStock'>
-    //           <Form.Label>Product in Stock</Form.Label>
-    //           <Form.Control type='number' placeholder='Enter Quantity' value={countInStock} onChange={(e) => SetCountInStock(e.target.value)} />
-    //         </Form.Group>
-    //         <Form.Group controlId='description'>
-    //           <Form.Label>Product Name</Form.Label>
-    //           <Form.Control type='text' placeholder='Enter Description' value={description} onChange={(e) => setDescription(e.target.value)} />
-    //         </Form.Group>
-    //         <Button variant='primary' type='submit' className='mt-3'>
-    //           Create Product
-    //         </Button>
-    //       </Form>
-    //     </Col>
-    //   </Row>
-    // </Container>
     <>
       {loading && <Loader />}
       <section className='section bg-color-grey'>
@@ -139,14 +92,16 @@ const CreateProduct = () => {
                   {...register('image', {
                     required: 'Image is required',
                   })}
+                  onChange={handleImage}
                   aria-invalid={errors.image ? 'true' : 'false'}
                 />
                 {errors.image && <p className='red'>{errors.image?.message}</p>}
+                {image && <img className='full-width' src={image} alt='product' />}
                 <label className='label'>Category</label>
                 <input
                   className='mgY10 text'
                   {...register('category', {
-                    required: 'Categoryv is required',
+                    required: 'Category is required',
                   })}
                   aria-invalid={errors.category ? 'true' : 'false'}
                 />
@@ -196,15 +151,15 @@ const CreateProduct = () => {
 
 export default CreateProduct
 
-// function convertToBase64(file) {
-//   return new Promise((resolve, reject) => {
-//     const fileReader = new FileReader()
-//     fileReader.readAsDataURL(file)
-//     fileReader.onload = () => {
-//       resolve(fileReader.result)
-//     }
-//     fileReader.onerror = (error) => {
-//       reject(error)
-//     }
-//   })
-// }
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    }
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}

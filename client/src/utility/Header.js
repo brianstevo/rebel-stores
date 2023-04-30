@@ -104,7 +104,7 @@ const Header = () => {
                 <Link className='mg0' to='/admin/users' onClick={(e) => setClick(false)}>
                   Users
                 </Link>
-                <Link className='mg0' to='/admin/products' onClick={(e) => setClick(false)}>
+                <Link className='mg0' to='/admin/products/view' onClick={(e) => setClick(false)}>
                   Products
                 </Link>
               </div>

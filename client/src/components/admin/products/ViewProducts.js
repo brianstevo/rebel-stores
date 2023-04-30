@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../utility/Loader'
 import Message from '../../../utility/Message'
-import { deleteProduct, listProducts } from '../../../actions/productActions'
-import { Link, useNavigate } from 'react-router-dom'
+import { deleteProduct, listProductDetails, listProducts } from '../../../actions/productActions'
+import { useNavigate } from 'react-router-dom'
 // import Rating from "../../../utility/Rating"
 
 const ViewProducts = () => {
@@ -33,9 +33,13 @@ const ViewProducts = () => {
     }
   }
 
+  const editProductHandler = (id) => {
+    dispatch(listProductDetails(id))
+    navigate('/admin/products/edit')
+  }
+
   return (
     <>
-      {message && <Message variant='success' message={message} />}
       {loading ? (
         <Loader />
       ) : (
@@ -68,10 +72,8 @@ const ViewProducts = () => {
                         Edit
                       </button>
                     </LinkContainer> */}
-                        <Link to={`/admin/products/edit/${product._id}`}>
-                          <i style={{ marginLeft: '10px' }} className='fa-solid fa-pen-to-square'></i>
-                        </Link>
-                        <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash' onClick={() => deleteHandler(product._id)}></i>
+                        <i style={{ marginLeft: '10px' }} className='fa-solid fa-pen-to-square icon' onClick={() => editProductHandler(product._id)}></i>
+                        <i style={{ marginLeft: '10px' }} className='fa-solid fa-trash icon' onClick={() => deleteHandler(product._id)}></i>
                       </td>
                     </tr>
                   ))}

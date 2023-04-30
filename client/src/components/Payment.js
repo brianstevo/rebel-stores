@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-// import { Form, Col, Container, Card } from 'react-bootstrap'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -16,12 +15,7 @@ const Payment = () => {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm()
+  const { register, handleSubmit, reset } = useForm()
 
   if (!shippingAddress.address) {
     navigate('/shipping')
@@ -47,22 +41,22 @@ const Payment = () => {
   return (
     <>
       <section className='section'>
-        <Stepper step1='C' step2='A' />
         <div className='flex-container'>
+          <Stepper step1='C' step2='A' />
           <div className='flex-row pdT20 justify-content-center'>
             <div className='flex-col-sm-6 flex-col-lg-4 pd30 card-border'>
               <h3 className='text-align-center pdB20'>Payment Method</h3>
               <form className='form' onSubmit={handleSubmit(onSubmit)}>
                 <div className='radioGroup'>
                   <div className='flex align-items-center'>
-                    <input className='mgY5 radio' type='radio' name='payment' value='RazorPay' {...register('payment', { required: 'Address is required' })} aria-invalid={errors.payment ? 'true' : 'false'} />
+                    <input className='mgY5 radio' type='radio' name='payment' value='RazorPay' {...register('payment', { required: 'Address is required' })} />
                     <label className='label pdL10'>RazorPay</label>
                   </div>
                   {/* <div className='flex align-items-center'>
                     <input className='mgY5 radio' type='radio' name='payment' value='PayPal' {...register('payment', { required: 'Address is required' })} aria-invalid={errors.payment ? 'true' : 'false'} />
                     <label className='label pdL10'>Paypal</label>
                   </div> */}
-                  {errors.payment && <p className='red'>{errors.payment?.message}</p>}
+                  {/* {errors.payment && <p className='red'>{errors.payment?.message}</p>} */}
                 </div>
                 <button className='mgT20 btn-blue btn-block btn' type='submit'>
                   Continue

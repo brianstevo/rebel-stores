@@ -41,8 +41,8 @@ const Shipping = () => {
   return (
     <>
       <section className='section'>
-        <Stepper step1='A' />
         <div className='flex-container'>
+          <Stepper step1='A' />
           <div className='flex-row pdT20 justify-content-center'>
             <div className=' flex-col-sm-6 flex-col-lg-4 pd30 card-border'>
               <form className='form' onSubmit={handleSubmit(onSubmit)}>

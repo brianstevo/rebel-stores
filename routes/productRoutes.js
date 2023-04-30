@@ -11,7 +11,7 @@ router.route('/:id').get(getProduct)
 // POST create product
 router.route('/create').post(formidableMiddleware(), authenticate, admin, imageUploadToCloudinary, createProduct)
 //PUT edit product
-router.route('/edit/:id').put(authenticate, admin, updateProduct)
+router.route('/edit/:id').put(formidableMiddleware(), authenticate, admin, updateProduct)
 //DELETE  /api/products/delete/:id delete product
 router.route('/delete/:id').delete(authenticate, admin, deleteProduct)
 export default router

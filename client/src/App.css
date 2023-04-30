@@ -18,9 +18,8 @@ body {
 
 /*Loader*/
 .loader {
-  position: absolute;
+  position: fixed;
   top: 400px;
-  bottom: 0;
   right: 0;
   left: 0;
   margin: auto;
@@ -762,4 +761,8 @@ hr {
 }
 .full-width {
   width: 100%;
+}
+
+.icon:hover {
+  cursor: pointer;
 }
