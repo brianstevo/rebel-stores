@@ -81,7 +81,7 @@ const Header = () => {
                   <Link className='mg0' to='/profile' onClick={(e) => setClick(false)}>
                     Profile
                   </Link>
-                  <Link className='mg0'>Profile</Link>
+                  {/* <Link className='mg0'>Profile</Link> */}
                 </div>
               </li>
               <li className='menu-item '>
@@ -106,6 +106,9 @@ const Header = () => {
                 </Link>
                 <Link className='mg0' to='/admin/products/view' onClick={(e) => setClick(false)}>
                   Products
+                </Link>
+                <Link className='mg0' to='/admin/order' onClick={(e) => setClick(false)}>
+                  Orders
                 </Link>
               </div>
             </li>

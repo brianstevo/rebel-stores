@@ -18,6 +18,8 @@ import ProductList from './components/admin/products/ProductList'
 import ViewProducts from './components/admin/products/ViewProducts'
 import CreateProduct from './components/admin/products/CreateProduct'
 import EditProduct from './components/admin/products/EditProduct'
+import OrderList from './components/admin/orders/OrderList'
+import AdminOrder from './components/admin/orders/AdminOrder'
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
             <Route index element={<ViewProducts />} exact />
           </Route>
           <Route path='/admin/users' element={<Users />} exact />
+          <Route path='/admin/order' element={<OrderList />} exact />
+          <Route path='/admin/order/:id' element={<AdminOrder />} exact />
           <Route path='/profile' element={<Profile />} exact />
           <Route path='/order/:id' element={<Order />} exact />
           <Route path='/placeorder' element={<PlaceOrder />} exact />

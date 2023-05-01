@@ -46,7 +46,7 @@ const CreateProduct = () => {
     formData.append('brand', data.brand)
     formData.append('countInStock', data.quantity)
     formData.append('name', data.name)
-    formData.append('description', data.name)
+    formData.append('description', data.description)
     dispatch(createProduct(formData))
   }
 

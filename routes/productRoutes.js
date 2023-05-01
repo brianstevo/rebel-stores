@@ -1,6 +1,6 @@
 import express from 'express'
 import formidableMiddleware from 'express-formidable'
-import { getProducts, getProduct, createProduct, deleteProduct, updateProduct, imageUploadToCloudinary } from '../controllers/productController.js'
+import { getProducts, getProduct, createProduct, deleteProduct, updateProduct, imageUploadToCloudinary, reviewProduct } from '../controllers/productController.js'
 import { authenticate, admin } from '../middleware/authMiddleware.js'
 const router = express.Router()
 
@@ -8,6 +8,7 @@ const router = express.Router()
 router.route('/').get(getProducts)
 // GET /api/products/:id fetch product
 router.route('/:id').get(getProduct)
+router.route('/:id/review').post(authenticate, reviewProduct)
 // POST create product
 router.route('/create').post(formidableMiddleware(), authenticate, admin, imageUploadToCloudinary, createProduct)
 //PUT edit product

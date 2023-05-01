@@ -7,6 +7,7 @@ import { addItemToCart } from '../actions/cartAction'
 import { RESET } from '../actions/changeActions'
 import Loader from '../utility/Loader'
 import Message from '../utility/Message'
+import Review from './Review'
 
 const ProductDetails = () => {
   let navigate = useNavigate()
@@ -84,6 +85,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
+            <Review id={product._id} reviews={product.reviewsArray} />
           </div>
         </section>
       )}

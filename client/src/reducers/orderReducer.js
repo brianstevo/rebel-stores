@@ -29,7 +29,6 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_MY_SUCCESS:
       return {
-        loading: false,
         orders: action.payload,
       }
     case ORDER_LIST_MY_RESET:
@@ -43,7 +42,6 @@ export const orderListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_SUCCESS:
       return {
-        loading: false,
         orders: action.payload,
       }
     default:

@@ -4,6 +4,7 @@ import { addOrderItems, getOrderById, updateOrderToPaid, updateOrderToDelivered,
 import { authenticate, admin } from '../middleware/authMiddleware.js'
 
 router.route('/').post(authenticate, addOrderItems).get(authenticate, admin, getOrders)
+// router.route('/orders')
 router.route('/myorders').get(authenticate, getMyOrders)
 router.route('/:id').get(getOrderById)
 router.route('/:id/pay').put(authenticate, updateOrderToPaid)

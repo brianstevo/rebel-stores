@@ -8,6 +8,7 @@ export const PRODUCT_DELETE_RESET = 'PRODUCT_DELETE_RESET'
 export const PRODUCT_CREATE_SUCCESS = 'PRODUCT_CREATE_SUCCESS'
 export const PRODUCT_CREATE_RESET = 'PRODUCT_CREATE_RESET'
 export const PRODUCT_UPDATE_SUCCESS = 'PRODUCT_UPDATE_SUCCESS'
+export const PRODUCT_REVIEW_SUCCESS = 'PRODUCT_REVIEW_SUCCESS'
 
 export const listProducts = () => async (dispatch) => {
   try {
@@ -73,7 +74,6 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 export const createProduct = (formData) => async (dispatch, getState) => {
   try {
-    console.log(formData)
     dispatch({ type: LOADING })
     const {
       userLogin: { userInfo },
@@ -110,6 +110,35 @@ export const updateProduct = (id, formData) => async (dispatch, getState) => {
       },
     }
     const { data } = await axios.put(`/api/products/edit/${id}`, formData, config)
+    dispatch({
+      type: SUCCESS_MESSAGE,
+      payload: data.message,
+    })
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const reviewProduct = (id, review) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await axios.post(`/api/products/${id}/review`, review, config)
+
+    // dispatch({
+    //   type: PRODUCT_REVIEW_SUCCESS,
+    //   payload: data,
+    // })
     dispatch({
       type: SUCCESS_MESSAGE,
       payload: data.message,

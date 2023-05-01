@@ -38,7 +38,6 @@ const imageUploadToCloudinary = asyncHandler(async (req, res, next) => {
 })
 
 const createProduct = asyncHandler(async (req, res) => {
-  console.log(req.fields)
   const { name, price, brand, category, countInStock, description } = req.fields
   const product = new Product({
     name: name,
@@ -66,7 +65,7 @@ const createProduct = asyncHandler(async (req, res) => {
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  console.log('hi')
+  console.log(req.fields)
   const { name, price, brand, category, countInStock, description, imageUpload } = req.fields
   const fetchedProduct = await Product.findById(req.params.id)
   if (fetchedProduct) {
@@ -116,4 +115,34 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 })
 
-export { getProducts, getProduct, createProduct, deleteProduct, updateProduct, imageUploadToCloudinary }
+const reviewProduct = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body
+  const fetchedProduct = await Product.findById(req.params.id)
+  if (fetchedProduct) {
+    const alreadyReviewed = fetchedProduct.reviewsArray.find((item) => item.user.toString() === req.user._id.toString())
+    if (alreadyReviewed) {
+      res.status(400)
+      throw new Error('Product Already Reviewed')
+    }
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment: comment,
+      user: req.user._id,
+    }
+
+    fetchedProduct.reviewsArray.push(review)
+    fetchedProduct.reviews = fetchedProduct.reviewsArray.length
+    fetchedProduct.rating = fetchedProduct.reviewsArray.reduce((acc, item) => item.rating + acc, 0) / fetchedProduct.reviewsArray.length
+    const updatedProduct = await fetchedProduct.save()
+    res.json({
+      updatedProduct,
+      message: 'Review added',
+    })
+  } else {
+    res.status(404)
+    throw new Error('Product does not exit')
+  }
+})
+
+export { getProducts, getProduct, createProduct, deleteProduct, updateProduct, imageUploadToCloudinary, reviewProduct }

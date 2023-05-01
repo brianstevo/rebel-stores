@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import Loader from '../utility/Loader'
-import axios from 'axios'
-import { getOrderDetails, payOrder } from '../actions/orderAction'
-import Message from '../utility/Message'
+import { deliverOrder, getOrderDetails } from '../../../actions/orderAction'
+import Loader from '../../../utility/Loader'
+import Message from '../../../utility/Message'
 
-const Order = () => {
+const AdminOrder = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let { id } = useParams()
@@ -35,32 +34,9 @@ const Order = () => {
     }
     //eslint-disable-next-line
   }, [userInfo, dispatch])
-  const successPaymentHandler = async () => {
-    const { data } = await axios.post('/api/payment/checkout', { totalPrice: order.totalPrice })
-    const options = {
-      key: process.env.KEY_ID,
-      currency: data.currency,
-      amount: data.amount,
-      name: 'Rebel Store',
-      description: 'Test Wallet Transaction',
-      image: '',
-      order_id: data.id,
-      handler: async (response) => {
-        let paymentResponse = {
-          payment_id: response.razorpay_payment_id,
-          order_id: response.razorpay_order_id,
-          signature: response.razorpay_signature,
-        }
-        dispatch(payOrder(id, paymentResponse))
-      },
-      prefill: {
-        name: userInfo.name,
-        email: userInfo.email,
-        contact: '9999999999',
-      },
-    }
-    const paymentObject = new window.Razorpay(options)
-    paymentObject.open()
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(id))
   }
 
   return (
@@ -75,6 +51,12 @@ const Order = () => {
             <section className='section bg-color-gre'>
               <div className='flex-container'>
                 <h1 className='headingTitle pdY10'>Order {order._id}</h1>
+                <div className='text-align-end '>
+                  <Link className='btn-outline-black btn-sm mgY10' to='/admin/order'>
+                    Go Back
+                  </Link>
+                </div>
+                {/* <h1 className='headingTitle all-pdY10'>Shopping Cart</h1> */}
                 <div className='flex-row mgY20 '>
                   <div className=' flex-col-md-9 pdL30'>
                     <div className='flex-row sm-pdXY10'>
@@ -143,9 +125,9 @@ const Order = () => {
                       </div>
                       <div className='flex-col-xs-6  xs-text-align-center'>₹{order.totalPrice}</div>
                     </div>
-                    {!order.isPaid && (
-                      <button className='btn btn-block btn-blue' onClick={successPaymentHandler}>
-                        Pay
+                    {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                      <button className='btn btn-block btn-blue' onClick={deliverHandler}>
+                        Mark As Delivered
                       </button>
                     )}
                   </div>
@@ -159,4 +141,4 @@ const Order = () => {
   )
 }
 
-export default Order
+export default AdminOrder
